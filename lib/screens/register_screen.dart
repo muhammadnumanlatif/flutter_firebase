@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/screens/home_screen.dart';
 import 'package:flutter_firebase/screens/login_screen.dart';
 import 'package:flutter_firebase/services/auth_service.dart';
 import 'package:flutter_firebase/utils/utils.dart';
@@ -65,42 +66,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SizedBox(
               height: 25,
             ),
-         loading? CircularProgressIndicator():Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width * 0.75,
-              child: ElevatedButton(
-                onPressed: () async {
-                  setState(() {
-                    loading=true;
-                  });
-                  if (emailController.text == "" ||
-                      passwordController.text == "" ||
-                      !emailController.text.contains('@')) {
-                    Utils().customMessage(
-                        context, "All fields are required!", Colors.redAccent);
-                  } else if (passwordController.text.length < 5) {
-                    Utils().customMessage(context, "Password field must be >5!",
-                        Colors.redAccent);
-                  } else if (passwordController.text !=
-                      confirmPasswordController.text) {
-                    Utils().customMessage(context, "Password field must match!",
-                        Colors.redAccent);
-                  } else {
-                    User? result = await AuthService().register(
-                        emailController.text, passwordController.text, context);
-                    (result != null)
-                        ? Utils().customMessage(
-                            context, "${result.email}", Colors.teal)
-                        : Utils().customMessage(
-                            context, "User is Null", Colors.redAccent);
-                  }
-                  setState(() {
-                    loading=false;
-                  });
-                },
-                child: Text("Register"),
-              ),
-            ),
+            loading
+                ? CircularProgressIndicator()
+                : Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          loading = true;
+                        });
+                        if (emailController.text == "" ||
+                            passwordController.text == "" ||
+                            !emailController.text.contains('@')) {
+                          Utils().customMessage(context,
+                              "All fields are required!", Colors.redAccent);
+                        } else if (passwordController.text.length < 5) {
+                          Utils().customMessage(context,
+                              "Password field must be >5!", Colors.redAccent);
+                        } else if (passwordController.text !=
+                            confirmPasswordController.text) {
+                          Utils().customMessage(context,
+                              "Password field must match!", Colors.redAccent);
+                        } else {
+                          User? result = await AuthService().register(
+                              emailController.text,
+                              passwordController.text,
+                              context);
+                          if (result != null) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          }
+                        }
+                        setState(() {
+                          loading = false;
+                        });
+                      },
+                      child: Text("Register"),
+                    ),
+                  ),
             SizedBox(
               height: 15,
             ),

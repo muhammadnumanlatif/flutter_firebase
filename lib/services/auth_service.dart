@@ -34,4 +34,16 @@ class AuthService {
       print(e);
     }
   }
+
+  //login user
+  Future<User?> signOut(BuildContext context) async {
+    try {
+      await firebaseAuth.signOut();
+    } on FirebaseAuthException catch (e) {
+      Utils().customMessage(context, e.message.toString(), Colors.redAccent);
+    } catch (e) {
+      print(e);
+    }
+  }
+
 }

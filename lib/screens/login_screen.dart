@@ -4,6 +4,8 @@ import 'package:flutter_firebase/screens/register_screen.dart';
 import 'package:flutter_firebase/services/auth_service.dart';
 import 'package:flutter_firebase/utils/utils.dart';
 
+import 'home_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
@@ -69,11 +71,13 @@ bool loading = false;
                   } else {
                     User? result = await AuthService().signIn(
                         emailController.text, passwordController.text,context);
-                    (result != null)
-                        ? Utils().customMessage(
-                            context, "SignIn Successfully", Colors.teal)
-                        : Utils().customMessage(
-                            context, "SignIn Failed", Colors.redAccent);
+                    if(result != null){
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()),
+                              (route) => false);
+                    }
                   }
                   setState(() {
                     loading=false;
