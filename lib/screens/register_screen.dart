@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/screens/home_screen.dart';
 import 'package:flutter_firebase/screens/login_screen.dart';
 import 'package:flutter_firebase/services/auth_service.dart';
-import 'package:flutter_firebase/utils/utils.dart';
+import 'package:flutter_firebase/utils/custom_message.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -97,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                                    builder: (context) => HomeScreen(user: result,)));
                           }
                         }
                         setState(() {

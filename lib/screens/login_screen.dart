@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/screens/register_screen.dart';
 import 'package:flutter_firebase/services/auth_service.dart';
-import 'package:flutter_firebase/utils/utils.dart';
+import 'package:flutter_firebase/utils/custom_message.dart';
 
 import 'home_screen.dart';
 
@@ -75,7 +75,7 @@ bool loading = false;
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()),
+                              builder: (context) => HomeScreen(user: result,)),
                               (route) => false);
                     }
                   }

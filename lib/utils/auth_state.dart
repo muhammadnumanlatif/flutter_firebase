@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/screens/home_screen.dart';
 import 'package:flutter_firebase/screens/register_screen.dart';
@@ -10,9 +11,9 @@ class AuthStateCheck extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: AuthService().firebaseAuth.authStateChanges(),
-        builder: (context,snapshot){
+        builder: (context,AsyncSnapshot snapshot){
         if(snapshot.hasData){
-          return HomeScreen();
+          return HomeScreen(user: snapshot.data,);
         }
         return RegisterScreen();
         }
